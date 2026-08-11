@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaLens | Advanced Instagram ID & Username Lookup</title>
+    <meta name="description" content="Free, fast, and accurate tool to convert Instagram Usernames to IDs, and vice versa.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Poppins', 'sans-serif'] },
+                    colors: { brand: '#E1306C', brandDark: '#C13584' }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .glass-card {
+            background: rgba(31, 41, 55, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #E1306C; }
+    </style>
+</head>
+
+<body class="text-gray-100 min-h-screen flex flex-col items-center overflow-x-hidden overflow-y-scroll relative selection:bg-brand selection:text-white text-xs sm:text-sm">
+
+    <div class="fixed top-6 left-4 md:left-10 text-brand opacity-10 text-2xl md:text-4xl animate-pulse -z-10"><i class="fa-solid fa-heart"></i></div>
+    <div class="fixed bottom-16 right-4 md:right-10 text-purple-500 opacity-10 text-3xl md:text-5xl animate-bounce -z-10"><i class="fa-brands fa-instagram"></i></div>
+
+    <main class="flex-grow flex flex-col items-center w-full max-w-2xl mt-4 sm:mt-6 px-4 relative z-10">
+
+        <div class="text-center mb-4 sm:mb-6 w-full">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-brand mb-1 tracking-tight drop-shadow-sm">
+                <i class="fa-solid fa-camera-retro mr-1.5"></i>InstaLens
+            </h1>
+            <p class="text-gray-400 text-xs sm:text-sm font-light">The Ultimate Instagram ID Converter</p>
+
+            <div id="quote-box" class="mt-2 opacity-75 text-[11px] sm:text-xs italic text-purple-300 max-w-md mx-auto transition-opacity duration-500 px-2">
+                <span id="quote-text">"Loading inspiration..."</span>
+                <span id="quote-author" class="block font-semibold mt-0.5 text-[9px] text-gray-400 uppercase tracking-wider"></span>
+            </div>
+        </div>
+
+        <div class="glass-card w-full p-4 sm:p-6 rounded-2xl shadow-2xl transition-all duration-300 relative overflow-hidden">
+
+            <div class="flex space-x-1.5 mb-4 sm:mb-5 bg-gray-900/60 p-1 rounded-xl">
+                <button id="tab-u2i" class="flex-1 py-2 text-xs sm:text-sm text-white bg-gray-800 shadow-md rounded-lg font-semibold transition-all" onclick="switchTab('u2i')">
+                    <i class="fa-solid fa-at mr-1"></i>Username
+                </button>
+                <button id="tab-i2u" class="flex-1 py-2 text-xs sm:text-sm text-gray-400 hover:text-white rounded-lg font-semibold transition-all" onclick="switchTab('i2u')">
+                    <i class="fa-solid fa-id-badge mr-1"></i>User ID
+                </button>
+            </div>
+
+            <div class="flex flex-col space-y-2 relative z-10">
+                <label id="input-label" class="text-[10px] sm:text-xs text-gray-300 uppercase tracking-widest font-semibold ml-1">Enter Instagram Username</label>
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <div class="relative flex-1">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                            <i id="input-icon" class="fa-solid fa-user text-sm"></i>
+                        </div>
+                        <input type="text" id="query-input" placeholder="e.g. @username or https://..."
+                            class="w-full bg-gray-900/80 border border-gray-700 text-white text-xs sm:text-sm rounded-lg pl-10 pr-4 py-2.5 sm:py-3 focus:outline-none focus:ring-1 focus:ring-brand focus:border-transparent transition shadow-inner">
+                    </div>
+                    <button onclick="fetchData()" id="search-btn" class="bg-gradient-to-r from-brand to-brandDark hover:from-pink-500 hover:to-brand text-white font-bold py-2.5 sm:py-3 px-5 sm:px-6 rounded-lg shadow-md transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center min-w-[100px] sm:min-w-[120px]">
+                        <span id="btn-text" class="text-xs sm:text-sm">Search</span>
+                        <i id="btn-icon" class="fa-solid fa-magnifying-glass ml-1.5 text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="min-h-[10px] transition-all duration-300">
+                <div id="error-banner" class="hidden mt-4 bg-red-900/40 border border-red-500/50 text-red-200 px-3 py-2.5 rounded-xl flex items-start sm:items-center text-left">
+                    <i class="fa-solid fa-triangle-exclamation text-base mr-2 mt-0.5 sm:mt-0"></i>
+                    <span id="error-text" class="text-xs font-medium"></span>
+                </div>
+
+                <div id="loading" class="hidden mt-6 text-center py-6">
+                    <i class="fa-solid fa-circle-notch fa-spin text-2xl text-brand mb-2"></i>
+                    <p id="loading-text" class="text-xs text-gray-400 animate-pulse font-medium">Extracting data...</p>
+                </div>
+
+                <div id="result-box" class="hidden mt-5 bg-gray-900/70 p-3 sm:p-4 rounded-xl border border-gray-700 shadow-inner animate-fade-in-up">
+
+                    <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b border-gray-700/50">
+                        <div class="relative flex-shrink-0">
+                            <img id="res-pic" src="" alt="Profile" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-brand shadow-md object-cover bg-gray-800">
+                        </div>
+
+                        <div class="text-center sm:text-left flex-1 min-w-0 w-full">
+                            <div class="flex items-center justify-center sm:justify-start flex-wrap gap-1.5 mb-0.5">
+                                <h3 id="res-name" class="text-lg sm:text-xl font-bold text-white truncate max-w-[200px] sm:max-w-xs"></h3>
+
+                                <span id="res-status-badge" class="bg-gray-800 text-[10px] px-2 py-0.5 rounded border border-gray-600 font-medium flex items-center gap-1">
+                                    <i id="status-icon" class="fa-solid"></i>
+                                    <span id="status-text"></span>
+                                </span>
+                            </div>
+                            <p id="res-username" class="text-brand font-medium text-xs sm:text-sm"></p>
+                            <p id="res-bio" class="text-gray-300 text-[11px] sm:text-xs mt-1.5 leading-relaxed break-words max-w-md"></p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-4">
+                        <div class="bg-gray-800/80 p-2.5 sm:p-3 rounded-lg border border-gray-700/50 flex justify-between items-center group">
+                            <div class="overflow-hidden">
+                                <span class="text-gray-400 text-[9px] sm:text-[10px] uppercase tracking-wider font-semibold block mb-0.5">User ID</span>
+                                <span id="res-id" class="font-mono text-white text-sm sm:text-base font-bold truncate block"></span>
+                            </div>
+                            <button onclick="copyToClipboard('res-id')" class="text-gray-500 hover:text-brand transition p-1.5 rounded-md hover:bg-gray-700 focus:outline-none" title="Copy ID">
+                                <i class="fa-regular fa-copy text-base"></i>
+                            </button>
+                        </div>
+
+                        <div id="stats-container" class="bg-gray-800/80 p-2.5 sm:p-3 rounded-lg border border-gray-700/50 flex justify-around items-center">
+                            <div class="text-center w-1/2">
+                                <span class="text-gray-400 text-[9px] sm:text-[10px] uppercase tracking-wider font-semibold block mb-0.5">Followers</span>
+                                <span id="res-foll" class="text-white text-sm sm:text-base font-bold"></span>
+                            </div>
+                            <div class="w-px h-6 bg-gray-700"></div>
+                            <div class="text-center w-1/2">
+                                <span class="text-gray-400 text-[9px] sm:text-[10px] uppercase tracking-wider font-semibold block mb-0.5">Following</span>
+                                <span id="res-following" class="text-white text-sm sm:text-base font-bold"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-2.5 bg-gray-800/50 p-2.5 sm:p-3 rounded-lg border border-gray-700/30 flex justify-between items-center">
+                        <div class="overflow-hidden pr-2 w-full">
+                            <span class="text-gray-400 text-[9px] sm:text-[10px] uppercase tracking-wider font-semibold block mb-0.5"><i class="fa-solid fa-link mr-1"></i>Profile Picture URL</span>
+                            <a id="res-pic-link" href="#" target="_blank" class="text-blue-400 text-[11px] sm:text-xs hover:underline truncate block w-full">View full size image</a>
+                        </div>
+                        <button onclick="copyToClipboard('res-pic-url-raw')" class="text-gray-500 hover:text-brand transition p-1.5 rounded-md hover:bg-gray-700 flex-shrink-0" title="Copy URL">
+                            <i class="fa-regular fa-copy text-base"></i>
+                        </button>
+                        <input type="hidden" id="res-pic-url-raw" value="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full text-center py-4 mt-2 text-gray-500 text-[11px] sm:text-xs z-10 relative">
+        <p>Built with <i class="fa-solid fa-code text-purple-400 mx-0.5"></i> and <i class="fa-solid fa-heart text-brand mx-0.5"></i> by <a href="https://github.com/acessrdpgg" target="_blank" class="text-gray-300 hover:text-brand transition font-semibold underline underline-offset-2">Avinash</a>.</p>
+    </footer>
+
+    <div id="toast" class="fixed bottom-4 right-4 transform translate-y-20 opacity-0 transition-all duration-300 bg-gray-800 text-white px-4 py-2.5 rounded-lg shadow-2xl border border-gray-700 flex items-center z-50 text-xs sm:text-sm">
+        <i class="fa-solid fa-circle-check text-green-400 mr-2 text-base"></i>
+        <span id="toast-msg" class="font-medium">Copied to clipboard!</span>
+    </div>
+
+    <script>
+        let mode = 'u2i';
+        const appState = {
+            u2i: { query: '', data: null, error: null },
+            i2u: { query: '', data: null, error: null }
+        };
+
+        async function fetchQuote() {
+            try {
+                const res = await fetch('https://api.quotable.io/random?tags=technology,inspirational');
+                const data = await res.json();
+                document.getElementById('quote-text').innerText = `"${data.content}"`;
+                document.getElementById('quote-author').innerText = `- ${data.author}`;
+            } catch (e) {
+                const fallbacks = [
+                    { content: "Talk is cheap. Show me the code.", author: "Linus Torvalds" },
+                    { content: "First, solve the problem. Then, write the code.", author: "John Johnson" }
+                ];
+                const rand = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+                document.getElementById('quote-text').innerText = `"${rand.content}"`;
+                document.getElementById('quote-author').innerText = `- ${rand.author}`;
+            }
+        }
+        fetchQuote();
+
+        function switchTab(newMode) {
+            if (mode === newMode) return;
+
+            const input = document.getElementById('query-input');
+            appState[mode].query = input.value;
+
+            mode = newMode;
+            hideResults();
+
+            const tabU2I = document.getElementById('tab-u2i');
+            const tabI2U = document.getElementById('tab-i2u');
+            const label = document.getElementById('input-label');
+            const icon = document.getElementById('input-icon');
+
+            const activeClass = "flex-1 py-2 text-xs sm:text-sm text-white bg-gray-800 shadow-md rounded-lg font-semibold transition-all";
+            const inactiveClass = "flex-1 py-2 text-xs sm:text-sm text-gray-400 hover:text-white rounded-lg font-semibold transition-all";
+
+            if(mode === 'u2i') {
+                tabU2I.className = activeClass;
+                tabI2U.className = inactiveClass;
+                label.innerText = "Enter Instagram Username";
+                input.placeholder = "e.g. @instagram or https://..."; // Updated Hint
+                icon.className = "fa-solid fa-at text-sm";
+            } else {
+                tabI2U.className = activeClass;
+                tabU2I.className = inactiveClass;
+                label.innerText = "Enter Instagram User ID";
+                input.placeholder = "e.g. 25025320"; // Updated Hint
+                icon.className = "fa-solid fa-id-badge text-sm";
+            }
+
+            input.value = appState[mode].query;
+            if (appState[mode].data) {
+                populateData(appState[mode].data);
+                document.getElementById('result-box').classList.remove('hidden');
+            } else if (appState[mode].error) {
+                showError(appState[mode].error);
+            }
+        }
+
+        function parseInput(rawInput) {
+            let parsed = rawInput.trim();
+            if (mode === 'u2i') {
+                if (parsed.includes('instagram.com')) {
+                    try {
+                        const url = new URL(parsed.startsWith('http') ? parsed : `https://${parsed}`);
+                        const paths = url.pathname.split('/').filter(p => p.length > 0);
+                        if (paths.length > 0) parsed = paths[0];
+                    } catch (e) {
+                        const parts = parsed.split('instagram.com/');
+                        if (parts.length > 1) parsed = parts[1].split('/')[0].split('?')[0];
+                    }
+                }
+                if (parsed.startsWith('@')) parsed = parsed.substring(1);
+            }
+            parsed = parsed.split('?')[0].replace(/\/$/, "");
+            return parsed;
+        }
+
+        document.getElementById('query-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') fetchData();
+        });
+
+        async function fetchData() {
+            const rawQuery = document.getElementById('query-input').value;
+            const query = parseInput(rawQuery);
+
+            if (!query) return showError("Please enter a valid query.");
+
+            appState[mode].data = null;
+            appState[mode].error = null;
+
+            const btn = document.getElementById('search-btn');
+            const loading = document.getElementById('loading');
+            const resBox = document.getElementById('result-box');
+            const loadingTxt = document.getElementById('loading-text');
+
+            hideError();
+            resBox.classList.add('hidden');
+            loading.classList.remove('hidden');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            loadingTxt.innerText = "Extracting data...";
+
+            try {
+                let finalData = null;
+
+                if (mode === 'u2i') {
+                    const response = await fetch(`/api/username-to-id?username=${query}`);
+                    const result = await response.json();
+                    if (!response.ok) throw new Error(result.detail || "Could not locate user. Ensure profile exists.");
+                    finalData = result.data;
+                } else {
+                    const response1 = await fetch(`/api/id-to-username?user_id=${query}`);
+                    const result1 = await response1.json();
+                    if (!response1.ok) throw new Error(result1.detail || "Failed to lookup ID.");
+
+                    const extractedUsername = result1.data.username;
+                    loadingTxt.innerHTML = `Found <span class="text-white font-bold">@${extractedUsername}</span>! Synchronizing full profile...`;
+
+                    const response2 = await fetch(`/api/username-to-id?username=${extractedUsername}`);
+                    const result2 = await response2.json();
+
+                    if (response2.ok) {
+                        finalData = result2.data;
+                    } else {
+                        finalData = result1.data;
+                        showToastMsg("Warning: Showing basic profile layer.", true);
+                    }
+                }
+
+                appState[mode].data = finalData;
+                populateData(finalData);
+                loading.classList.add('hidden');
+                resBox.classList.remove('hidden');
+
+            } catch (err) {
+                loading.classList.add('hidden');
+                appState[mode].error = err.message;
+                showError(err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<span class="text-xs sm:text-sm">Search</span><i class="fa-solid fa-magnifying-glass ml-1.5 text-xs"></i>';
+            }
+        }
+
+        function populateData(user) {
+            document.getElementById('res-id').innerText = user.pk || user.id || 'N/A';
+            document.getElementById('res-username').innerText = `@${user.username || 'N/A'}`;
+            document.getElementById('res-name').innerText = user.full_name || 'Instagram User';
+
+            const pic = document.getElementById('res-pic');
+            const rawUrlInput = document.getElementById('res-pic-url-raw');
+            const picLink = document.getElementById('res-pic-link');
+
+            if (user.profile_pic_url) {
+                pic.src = user.profile_pic_url;
+                rawUrlInput.value = user.profile_pic_url;
+                picLink.href = user.profile_pic_url;
+                picLink.innerText = user.profile_pic_url.substring(0, 35) + '...';
+            } else {
+                pic.src = 'https://via.placeholder.com/150/1f2937/FFFFFF?text=No+Image';
+                rawUrlInput.value = '';
+                picLink.innerText = 'No image available';
+                picLink.href = '#';
+            }
+
+            // Global vs. Lock Privacy status tracking
+            const statusIcon = document.getElementById('status-icon');
+            const statusText = document.getElementById('status-text');
+            const badge = document.getElementById('res-status-badge');
+
+            if (user.is_private) {
+                statusIcon.className = "fa-solid fa-lock text-yellow-500";
+                statusText.innerText = "Private";
+                badge.className = "bg-yellow-950/40 text-[10px] text-yellow-200 px-2 py-0.5 rounded border border-yellow-700/50 font-medium flex items-center gap-1";
+            } else {
+                statusIcon.className = "fa-solid fa-earth-americas text-green-400";
+                statusText.innerText = "Public";
+                badge.className = "bg-green-950/40 text-[10px] text-green-200 px-2 py-0.5 rounded border border-green-700/50 font-medium flex items-center gap-1";
+            }
+
+            const statsContainer = document.getElementById('stats-container');
+            const bio = document.getElementById('res-bio');
+
+            if ('follower_count' in user) {
+                statsContainer.classList.remove('hidden');
+                document.getElementById('res-foll').innerText = user.follower_count.toLocaleString();
+                document.getElementById('res-following').innerText = user.following_count.toLocaleString();
+                bio.innerText = user.biography || '';
+            } else {
+                statsContainer.classList.add('hidden');
+                bio.innerText = "Extended context stats unavailable.";
+            }
+        }
+
+        function showError(msg) {
+            const banner = document.getElementById('error-banner');
+            document.getElementById('error-text').innerText = msg;
+            banner.classList.remove('hidden');
+        }
+
+        if (!appState[mode].data && !appState[mode].error) {
+            hideError();
+        }
+
+        function hideError() { document.getElementById('error-banner').classList.add('hidden'); }
+        function hideResults() { document.getElementById('result-box').classList.add('hidden'); hideError(); }
+
+        function copyToClipboard(elementId) {
+            let textToCopy = '';
+            const el = document.getElementById(elementId);
+            if(el.tagName === 'INPUT') textToCopy = el.value;
+            else textToCopy = el.innerText;
+
+            if (!textToCopy) return;
+            navigator.clipboard.writeText(textToCopy).then(() => showToastMsg("Copied to clipboard!", false));
+        }
+
+        function showToastMsg(msg, isWarning) {
+            const toast = document.getElementById('toast');
+            const icon = toast.querySelector('i');
+            document.getElementById('toast-msg').innerText = msg;
+
+            if(isWarning) {
+                icon.className = "fa-solid fa-triangle-exclamation text-yellow-400 mr-2 text-base";
+                toast.classList.replace('border-gray-700', 'border-yellow-600/50');
+            } else {
+                icon.className = "fa-solid fa-circle-check text-green-400 mr-2 text-base";
+                toast.classList.replace('border-yellow-600/50', 'border-gray-700');
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
+        }
+    </script>
+</body>
+</html>
