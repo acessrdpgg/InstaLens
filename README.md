@@ -1,75 +1,78 @@
-# 📸 InstaLens - Advanced Instagram ID Converter
+<!-- HEADER BANNER -->
+<p align="center">
+  <img src=".github/assets/banner.png" alt="InstaLens Header Banner" width="100%" />
+</p>
 
-[![Vercel Deploy](https://img.shields.io/badge/Vercel-Deployed-success?style=for-the-badge&logo=vercel)](https://your-vercel-link-here.vercel.app/)
-[![Python](https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge&logo=python)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+<h1 align="center">📸 InstaLens</h1>
 
-InstaLens is a sleek, serverless OSINT web application that instantly converts Instagram Usernames to their permanent numeric User IDs, and vice versa. It bypasses basic bot protections to fetch rich profile data, wrapped in a premium, fully responsive Dark Mode UI.
+<p align="center">
+  <b>Advanced OSINT Instagram ID & Username Converter</b>
+</p>
 
-### 🌐 Live Demo: [InstaLens Web App](https://your-vercel-link-here.vercel.app/) *(Add your Vercel link here once deployed)*
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Facessrdpgg%2FInstaLens)
+<p align="center">
+  <a href="https://instalens-osint.vercel.app/"><img src="https://img.shields.io/badge/Vercel-Deployed-success?style=for-the-badge&logo=vercel" alt="Vercel Deploy"></a>
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge&logo=python" alt="Python"></a>
+  <a href="https://fastapi.tiangolo.com/"><img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI"></a>
+  <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS"></a>
+</p>
+
+<p align="center">
+  <a href="https://instalens-osint.vercel.app/"><b>🌐 Live Demo</b></a> •
+  <a href="#-features"><b>✨ Features</b></a> •
+  <a href="#-api-endpoints"><b>📡 REST API</b></a> •
+  <a href="#-local-development-setup"><b>🚀 Installation</b></a>
+</p>
+
+<p align="center">
+  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Facessrdpgg%2FInstaLens">
+    <img src="https://vercel.com/button" alt="Deploy with Vercel">
+  </a>
+</p>
 
 ---
 
-## ✨ Features
+## 🖼️ Application Preview
 
-- **🔄 Two-Way Conversion:** Seamlessly swap between Username ➡️ ID and ID ➡️ Username.
-- **⚡ Request Chaining:** When searching by ID, the backend intelligently extracts the username and chains a secondary request to pull full profile statistics.
-- **🛡️ Bot Bypass Engine:** Utilizes `cloudscraper` to bypass basic JavaScript/Cloudflare challenges seamlessly.
-- **📱 Responsive Glassmorphism UI:** Built with Tailwind CSS, ensuring a pixel-perfect, native-feeling experience on desktop, iOS, and Android.
-- **💾 State Preservation:** Switch between tabs without losing your previous search data.
-- **📋 Smart Clipboard:** One-click copy functionality for IDs and Profile Picture URLs.
-
-## 🛠️ Tech Stack
-
-- **Backend:** Python, FastAPI, Cloudscraper, Uvicorn
-- **Frontend:** HTML5, Vanilla JavaScript, Tailwind CSS
-- **Deployment:** Vercel (Serverless Functions)
+<p align="center">
+  <img src=".github/assets/preview.png" alt="InstaLens Dashboard Preview" width="90%" style="border-radius: 10px;" />
+</p>
 
 ---
 
-## 🚀 Local Development Setup
+## 🧐 What is InstaLens?
 
-Want to run or modify InstaLens on your local machine? Follow these steps:
+**InstaLens** is a lightweight, serverless OSINT tool engineered to bridge the gap between Instagram handles and numeric internal User IDs. Designed for security researchers, analysts, and developers, it performs dual-way conversion without requiring Instagram account credentials.
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/acessrdpgg/InstaLens.git
-cd InstaLens
-```
+### Key Highlights
+* **⚡ Dual-Direction Lookup:** Convert `@username` -> `User ID` or `User ID` -> `@username`.
+* **🔄 Automatic Data Chaining:** When searching by numeric ID, the system automatically resolves the handle and triggers an auxiliary lookup for complete metadata (followers, bio, privacy status).
+* **🛡️ Smart Bot Mitigation:** Utilizes header spoofing and browser fingerprinting via `cloudscraper` to bypass strict login walls.
+* **🔒 Privacy Status Indicator:** Renders conditional lock (`🔒 Private`) or global (`🌐 Public`) badges based on account visibility.
+* **📱 Desktop & Mobile Responsive:** Built with glassmorphism Tailwind CSS for a sleek, dark-mode native feel on all screen sizes.
 
-### 2. Create a Virtual Environment
-```bash
-python -m venv venv
-# On Windows:
-venv\Scripts\activate
-# On Mac/Linux:
-source venv/bin/activate
-```
+---
 
-### 3. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
+## 🛠️ Tech Stack & Architecture
 
-### 4. Run the Local Server
-```bash
-uvicorn api.index:app --reload
-```
-Once running, open your browser and navigate to `http://127.0.0.1:8000`.
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Frontend** | HTML5, Vanilla JS, Tailwind CSS | Micro-scaled glassmorphism UI |
+| **Backend Framework** | FastAPI (Python 3.9+) | Asynchronous API orchestration |
+| **Bypass Engine** | Cloudscraper / Requests | Headers & session handling |
+| **Deployment** | Vercel Serverless Functions | Zero-maintenance cloud hosting |
 
 ---
 
 ## 📡 API Endpoints
 
-InstaLens also functions as a REST API. You can hit these endpoints directly if running locally or via your Vercel deployment URL.
+InstaLens operates as both a web application and a lightweight REST API.
 
-### Get ID from Username
+### 1. Get User Data by Username
 ```http
 GET /api/username-to-id?username=instagram
 ```
-**Response:**
+
+**Example Response:**
 ```json
 {
   "success": true,
@@ -77,36 +80,57 @@ GET /api/username-to-id?username=instagram
     "pk": "25025320",
     "username": "instagram",
     "full_name": "Instagram",
+    "is_private": false,
     "follower_count": 668000000,
-    ...
+    "following_count": 81,
+    "biography": "Discover what's new on Instagram."
   }
 }
 ```
 
-### Get Username from ID
+### 2. Get Handle by User ID
 ```http
 GET /api/id-to-username?user_id=25025320
 ```
 
 ---
 
-## ☁️ Deployment (Vercel)
+## 🚀 Local Development Setup
 
-This project is pre-configured for **Vercel Serverless Functions** via the `vercel.json` file.
+### Prerequisites
+- Python 3.9 or higher
+- Git
 
-1. Push your code to GitHub.
-2. Log into [Vercel](https://vercel.com/) and click **Import Project**.
-3. Select this repository.
-4. Leave the "Framework Preset" as **Other**.
-5. Click **Deploy**.
+### 1. Clone & Navigate
+```bash
+git clone https://github.com/acessrdpgg/InstaLens.git
+cd InstaLens
+```
 
-Vercel will automatically route `/api/*` requests to the Python FastAPI backend and serve `public/index.html` on the root domain!
+### 2. Setup Virtual Environment
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# Linux / macOS
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install Dependencies & Run
+```bash
+pip install -r requirements.txt
+uvicorn api.index:app --reload
+```
+Navigate to `http://127.0.0.1:8000` in your web browser.
 
 ---
 
 ## 📜 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is open-source and available under the [MIT License](LICENSE).
 
----
-**Developed with ❤️ by [acessrdpgg](https://github.com/acessrdpgg)**
+<p align="center">
+  Designed & Maintained with ❤️ by <a href="https://github.com/acessrdpgg"><b>acessrdpgg</b></a>
+</p>

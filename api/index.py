@@ -60,7 +60,7 @@ class InstagramToolkit:
                         return self._find_target_in_json(json.loads(script))
                     except:
                         continue
-            return {"error": "User not found."}
+            return {"error": "User not found. / Request Blocked by Instagram."}
         except Exception as e:
             return {"error": str(e)}
 
