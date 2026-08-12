@@ -1,7 +1,5 @@
 <!-- HEADER BANNER -->
-<p align="center">
-  <img src=".github/assets/banner.png" alt="InstaLens Header Banner" width="100%" />
-</p>
+![InstaLens](https://socialify.git.ci/acessrdpgg/InstaLens/image?description=1&font=Source+Code+Pro&forks=1&issues=1&language=1&name=1&owner=1&pulls=1&stargazers=1&theme=Dark)
 
 <h1 align="center">📸 InstaLens</h1>
 
