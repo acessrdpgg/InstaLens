@@ -44,7 +44,7 @@
 ### Key Highlights
 * **⚡ Dual-Direction Lookup:** Convert `@username` -> `User ID` or `User ID` -> `@username`.
 * **🔄 Automatic Data Chaining:** When searching by numeric ID, the system automatically resolves the handle and triggers an auxiliary lookup for complete metadata (followers, bio, privacy status).
-* **🛡️ Smart Bot Mitigation:** Utilizes header spoofing and browser fingerprinting via `cloudscraper` to bypass strict login walls.
+* **🛡️ Smart Bot Mitigation:** Utilizes header spoofing and browser fingerprinting via `curl_cffi` to bypass strict login walls.
 * **🔒 Privacy Status Indicator:** Renders conditional lock (`🔒 Private`) or global (`🌐 Public`) badges based on account visibility.
 * **📱 Desktop & Mobile Responsive:** Built with glassmorphism Tailwind CSS for a sleek, dark-mode native feel on all screen sizes.
 
@@ -56,7 +56,7 @@
 | :--- | :--- | :--- |
 | **Frontend** | HTML5, Vanilla JS, Tailwind CSS | Micro-scaled glassmorphism UI |
 | **Backend Framework** | FastAPI (Python 3.9+) | Asynchronous API orchestration |
-| **Bypass Engine** | Cloudscraper / Requests | Headers & session handling |
+| **Bypass Engine** | curl_cffi / Requests | Headers & session handling |
 | **Deployment** | Vercel Serverless Functions | Zero-maintenance cloud hosting |
 
 ---
