@@ -1,14 +1,13 @@
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
-import os
-
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from curl_cffi import requests
 import json
+import os
 import re
 import time
+
+from curl_cffi import requests
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
@@ -49,8 +48,8 @@ class InstagramToolkit:
     def get_info_from_username(self, username):
         global resp
         try:
-            url = f"https://www.instagram.com/{username}/"
-            resp = self.session.get(url, timeout=10, allow_redirects=True)
+            url = f"https://redribbon.pythonanywhere.com/instagram"
+            resp = self.session.get(url, timeout=10, allow_redirects=True, params={"username": username})
 
             print("STATUS:", resp.status_code)
             print("URL:", resp.url)
@@ -74,7 +73,8 @@ class InstagramToolkit:
         global data_resp
         try:
             token_url = "https://commentpicker.com/actions/token.php?id=2026"
-            token_resp = self.session.get(token_url, headers=self.cp_headers, cookies=self.cp_cookies, timeout=10, allow_redirects=True)
+            token_resp = self.session.get(token_url, headers=self.cp_headers, cookies=self.cp_cookies, timeout=10,
+                                          allow_redirects=True)
 
             print("STATUS:", resp.status_code)
             print("URL:", resp.url)
@@ -86,7 +86,8 @@ class InstagramToolkit:
 
             action_url = f"https://commentpicker.com/actions/instagram-username-action.php?userid={user_id}&token={decoded_token}"
             for _ in range(3):
-                data_resp = self.session.get(action_url, headers=self.cp_headers, cookies=self.cp_cookies, allow_redirects=True)
+                data_resp = self.session.get(action_url, headers=self.cp_headers, cookies=self.cp_cookies,
+                                             allow_redirects=True)
 
                 print("STATUS:", resp.status_code)
                 print("URL:", resp.url)
