@@ -47,7 +47,8 @@
         }
     </script>
 
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📸</text></svg>">
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📸</text></svg>">
 
     <style>
         /* Fallback dark color for the body */
@@ -84,9 +85,10 @@
 
 <body class="text-gray-100 min-h-[100dvh] flex flex-col items-center overflow-x-hidden overflow-y-scroll relative selection:bg-brand selection:text-white text-xs sm:text-sm">
 
-    <div id="ios-bg-fix"></div>
+<div id="ios-bg-fix"></div>
 
-    <div class="fixed top-6 left-4 md:left-10 text-brand opacity-10 text-2xl md:text-4xl animate-pulse -z-10"><i class="fa-solid fa-heart"></i></div>
+<div class="fixed top-6 left-4 md:left-10 text-brand opacity-10 text-2xl md:text-4xl animate-pulse -z-10"><i
+        class="fa-solid fa-heart"></i></div>
 <div class="fixed top-6 left-4 md:left-10 text-brand opacity-10 text-2xl md:text-4xl animate-pulse -z-10"><i
         class="fa-solid fa-heart"></i></div>
 <div class="fixed bottom-16 right-4 md:right-10 text-purple-500 opacity-10 text-3xl md:text-5xl animate-bounce -z-10"><i
@@ -175,7 +177,11 @@
                                     <span id="status-text"></span>
                                 </span>
                         </div>
-                        <p id="res-username" class="text-brand font-medium text-xs sm:text-sm"></p>
+                        <a id="res-username"
+                           class="text-brand font-medium text-xs sm:text-sm hover:underline cursor-pointer"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                        </a>
                         <p id="res-bio"
                            class="text-gray-300 text-[11px] sm:text-xs mt-1.5 leading-relaxed break-words max-w-md"></p>
                     </div>
@@ -230,19 +236,23 @@
 </main>
 
 <div class="text-center mt-4">
-    <button onclick="toggleModal(true)" class="text-gray-500 hover:text-brand transition duration-200 text-xs flex items-center justify-center gap-1 mx-auto focus:outline-none bg-gray-900/40 px-3 py-1.5 rounded-full border border-gray-800 hover:border-gray-700 shadow-sm">
+    <button onclick="toggleModal(true)"
+            class="text-gray-500 hover:text-brand transition duration-200 text-xs flex items-center justify-center gap-1 mx-auto focus:outline-none bg-gray-900/40 px-3 py-1.5 rounded-full border border-gray-800 hover:border-gray-700 shadow-sm">
         <i class="fa-regular fa-circle-question text-sm"></i> Learn more & FAQ
     </button>
 </div>
 
-<div id="faq-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="glass-card max-w-md w-full p-5 sm:p-6 rounded-2xl shadow-2xl border border-gray-700 transform scale-95 transition-transform duration-300 max-h-[85vh] overflow-y-auto relative" onclick="event.stopPropagation()">
+<div id="faq-modal"
+     class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="glass-card max-w-md w-full p-5 sm:p-6 rounded-2xl shadow-2xl border border-gray-700 transform scale-95 transition-transform duration-300 max-h-[85vh] overflow-y-auto relative"
+         onclick="event.stopPropagation()">
 
         <div class="flex justify-between items-center pb-3 border-b border-gray-700/50 mb-4">
             <h2 class="text-white font-bold text-base sm:text-lg flex items-center gap-2">
                 <i class="fa-solid fa-circle-info text-brand"></i> Frequently Asked Questions
             </h2>
-            <button onclick="toggleModal(false)" class="text-gray-400 hover:text-white transition p-1 rounded-lg hover:bg-gray-800">
+            <button onclick="toggleModal(false)"
+                    class="text-gray-400 hover:text-white transition p-1 rounded-lg hover:bg-gray-800">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
         </div>
@@ -250,20 +260,26 @@
         <div class="space-y-4 text-xs sm:text-sm text-gray-300">
             <div>
                 <h3 class="text-purple-400 font-semibold mb-1">What is an Instagram User ID?</h3>
-                <p class="text-gray-400 leading-relaxed">An Instagram User ID (UID) is a permanent, unique numeric identifier assigned to an account when it is created. Unlike usernames, which can be changed at any time, a User ID never changes.</p>
+                <p class="text-gray-400 leading-relaxed">An Instagram User ID (UID) is a permanent, unique numeric
+                    identifier assigned to an account when it is created. Unlike usernames, which can be changed at any
+                    time, a User ID never changes.</p>
             </div>
             <div>
                 <h3 class="text-purple-400 font-semibold mb-1">How does the Instagram ID Finder work?</h3>
-                <p class="text-gray-400 leading-relaxed">InstaLens connects directly to secure open endpoints to pull public registry data safely without ever asking for your login credentials or account authorization tokens.</p>
+                <p class="text-gray-400 leading-relaxed">InstaLens connects directly to secure open endpoints to pull
+                    public registry data safely without ever asking for your login credentials or account authorization
+                    tokens.</p>
             </div>
             <div>
                 <h3 class="text-purple-400 font-semibold mb-1">Is it safe to use InstaLens?</h3>
-                <p class="text-gray-400 leading-relaxed">Yes. The tool strictly queries public backend nodes. It does not store search history, target logs, or personal tracking cookies.</p>
+                <p class="text-gray-400 leading-relaxed">Yes. The tool strictly queries public backend nodes. It does
+                    not store search history, target logs, or personal tracking cookies.</p>
             </div>
         </div>
 
         <div class="mt-5 pt-3 border-t border-gray-700/30 text-right">
-            <button onclick="toggleModal(false)" class="bg-gray-800 hover:bg-gray-700 text-white font-medium py-1.5 px-4 rounded-lg text-xs transition active:scale-95">
+            <button onclick="toggleModal(false)"
+                    class="bg-gray-800 hover:bg-gray-700 text-white font-medium py-1.5 px-4 rounded-lg text-xs transition active:scale-95">
                 Close Window
             </button>
         </div>
@@ -436,8 +452,19 @@
 
     function populateData(user) {
         document.getElementById('res-id').innerText = user.pk || user.id || 'N/A';
-        document.getElementById('res-username').innerText = `@${user.username || 'N/A'}`;
         document.getElementById('res-name').innerText = user.full_name || 'Instagram User';
+
+        const usernameEl = document.getElementById('res-username');
+
+        if (user.username) {
+            usernameEl.innerText = `@${user.username}`;
+            usernameEl.href = `https://www.instagram.com/${encodeURIComponent(user.username)}/`;
+            usernameEl.classList.remove('pointer-events-none', 'opacity-50');
+        } else {
+            usernameEl.innerText = '@N/A';
+            usernameEl.removeAttribute('href');
+            usernameEl.classList.add('pointer-events-none', 'opacity-50');
+        }
 
         const pic = document.getElementById('res-pic');
         const rawUrlInput = document.getElementById('res-pic-url-raw');
