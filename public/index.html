@@ -505,14 +505,16 @@
         const statsContainer = document.getElementById('stats-container');
         const bio = document.getElementById('res-bio');
 
-        if ('follower_count' in user) {
+        const hasFollowerData = user.follower_count != null && user.following_count != null;
+
+        if (hasFollowerData) {
             statsContainer.classList.remove('hidden');
-            document.getElementById('res-foll').innerText = user.follower_count.toLocaleString();
-            document.getElementById('res-following').innerText = user.following_count.toLocaleString();
+            document.getElementById('res-foll').innerText = Number(user.follower_count).toLocaleString();
+            document.getElementById('res-following').innerText = Number(user.following_count).toLocaleString();
             bio.innerText = user.biography || '';
         } else {
             statsContainer.classList.add('hidden');
-            bio.innerText = "Extended context stats unavailable.";
+            bio.innerText = user.biography || "Extended context stats unavailable.";
         }
     }
 
